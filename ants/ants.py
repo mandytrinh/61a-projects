@@ -40,9 +40,28 @@ class Place:
         """
         if insect.is_ant:
             # Phase 4: Special handling for BodyguardAnt
-            "*** YOUR CODE HERE ***"
-            assert self.ant is None, 'Two ants in {0}'.format(self)
-            self.ant = insect
+
+            if self.ant: #if an ant exists in a place
+                if self.ant.container and (insect.container or self.ant.ant):
+
+                    assert self.ant is None, "More than one bodyguard"
+                    #checks to make sure the insect being added is not a bodyguard if the
+                    #existing ant in place already a bodyguard, or if the ant under
+                    #is a bodyguard
+
+                if not self.ant.container and not insect.container: #If neither Ant can contain the other, then raise the same assertion error as before.
+
+                    assert self.ant is None, 'Two ants in {0}'.format(self)
+
+
+                if self.ant.can_contain(insect):#if the Ant currently occupying this Place can contain the Ant we are trying to add
+                    self.ant.contain_ant(insect) # then simply tell it to do so.
+
+                if insect.can_contain(self.ant):#If the Ant we are trying to add can contain the Ant currently occupying this Place
+                    insect.contain_ant(self.ant)#then have it do so
+                    self.ant = insect #and set this Place's ant to be the newly added Ant.
+            else:
+                self.ant = insect
         else:
             self.bees.append(insect)
         insect.place = self
@@ -52,8 +71,11 @@ class Place:
         if insect.is_ant:
             assert self.ant == insect, '{0} is not in {1}'.format(insect, self)
             # Phase 4: Special handling for BodyguardAnt and QueenAnt
-            "*** YOUR CODE HERE ***"
-            self.ant = None
+            #if isinstance(self.ant, "BodyGuardAnt"):
+
+            if insect.container and insect.ant: #If a BodyguardAnt containing another ant is removed
+                self.ant = insect.ant #the ant it is containing should be placed where the BodyguardAnt used to be
+                insect.place = None
         else:
             self.bees.remove(insect)
 
@@ -148,10 +170,13 @@ class Ant(Insect):
     damage = 0
     food_cost = 0
     blocks_path = True
-
+    container = False
     def __init__(self, armor=1):
         """Create an Ant with an armor quantity."""
         Insect.__init__(self, armor)
+
+    def can_contain(self,ant):
+        return self.container and (self.ant == None) and (not ant.container)
 
 
 class HarvesterAnt(Ant):
@@ -555,20 +580,24 @@ class HungryAnt(Ant):
             self.eat_bee(random_or_none(self.place.bees))
 
 class BodyguardAnt(Ant):
-    """BodyguardAnt provides protection to other Ants."""
+    """BodyguardAnt provides protection to other Ants. Food cost =4, armor = 2"""
     name = 'Bodyguard'
-    "*** YOUR CODE HERE ***"
     implemented = False
+    food_cost = 4
+    container = True
 
     def __init__(self):
         Ant.__init__(self, 2)
-        self.ant = None  # The Ant hidden in this bodyguard
+        self.ant = None  # none means no ant is currently being protected
 
     def contain_ant(self, ant):
-        "*** YOUR CODE HERE ***"
+        self.ant = ant
 
     def action(self, colony):
-        "*** YOUR CODE HERE ***"
+        """make sure that ants that are contained by BodyguardAnts still perform their action.
+         Override the action method for BodyguardAnt accordingly."""
+        if self.ant: #if there is a guarded ant
+            self.ant.action(colony) #then guarded ant will do its action
 
 
 class QueenPlace:
