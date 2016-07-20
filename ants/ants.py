@@ -45,9 +45,9 @@ class Place:
                 if self.ant.container and (insect.container or self.ant.ant):
 
                     assert self.ant is None, "More than one bodyguard"
-                    #checks to make sure the insect being added is not a bodyguard if the
-                    #existing ant in place already a bodyguard, or if the ant under
-                    #is a bodyguard
+                    #checks to see if ant in place is a bodyguard (self.ant.container) AND
+                    #the ant you're adding is a bodyguard (insect.container) OR the ant in place
+                    # already is guarding another ant (self.ant.ant)
 
                 if not self.ant.container and not insect.container: #If neither Ant can contain the other, then raise the same assertion error as before.
 
@@ -608,21 +608,57 @@ class QueenPlace:
     """
     def __init__(self, colony_queen, ant_queen):
         "*** YOUR CODE HERE ***"
+        self.colony_queen = colony_queen
+        self.ant_queen = ant_queen
 
     @property
     def bees(self):
-        "*** YOUR CODE HERE ***"
+        return self.colony_queen.bees or self.ant_queen.place.bees
 
-
-class QueenAnt:  # You should change this line
+class QueenAnt(ScubaThrower):  # You should change this line
     """The Queen of the colony.  The game is over if a bee enters her place."""
 
     name = 'Queen'
-    "*** YOUR CODE HERE ***"
     implemented = False
+    #watersafe = True
+    #food_cost = 6
 
     def __init__(self):
-        "*** YOUR CODE HERE ***"
+        ScubaThrower.__init__(self,1)
+        self.doubled_ants = []
+
+    def throw_at(self, target):
+    def double_damage(self, ant):
+        ant.damage *= 2
+
+    def find_all_ants(self, colony): #a colony is a place, a place is a square, a tunnel is a series of place
+
+    #do a double while loop to check for ants in a place, going back and going forward
+        place_forward = self.place
+        place_backward = self.place
+        already_doubled = []
+        entrance_transition = 0
+        while self.place_forward.entrance != None: #as long as it is not at end of tunnel, move forward
+
+            if self.place.ants: #if there is an ant in the current place
+
+                self.doubled_ants.append(ant)
+                already_doubled.append(ant)
+
+            place_forward = self.place.entrance
+
+            entrance_transition += 1
+
+        while self.place_backward.exit != None:
+
+            if self.place.ants: #if there is an ant in the current place
+
+                self.doubled_ants.append(ant)
+                already_doubled.append(ant)
+
+            place_backward = self.place.exit
+
+            entrance_transition += 1
 
     def action(self, colony):
         """A queen ant throws a leaf, but also doubles the damage of ants
@@ -630,7 +666,8 @@ class QueenAnt:  # You should change this line
 
         Impostor queens do only one thing: reduce their own armor to 0.
         """
-        "*** YOUR CODE HERE ***"
+        colony.queen = QueenPlace(colony.queen, self) #colony.queen is a place, set it now to be under QueenPlace
+
 
 
 class AntRemover(Ant):
