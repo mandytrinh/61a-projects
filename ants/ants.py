@@ -607,7 +607,6 @@ class QueenPlace:
     (2) The place in which the QueenAnt resides.
     """
     def __init__(self, colony_queen, ant_queen):
-        "*** YOUR CODE HERE ***"
         self.colony_queen = colony_queen
         self.ant_queen = ant_queen
 
@@ -628,6 +627,11 @@ class QueenAnt(ScubaThrower):  # You should change this line
         self.doubled_ants = []
 
     def throw_at(self, target):
+        if target is not None:
+            for ant in self.find_all_ants(self.place):
+                self.double_damage(ant)
+
+
     def double_damage(self, ant):
         ant.damage *= 2
 
@@ -636,29 +640,31 @@ class QueenAnt(ScubaThrower):  # You should change this line
     #do a double while loop to check for ants in a place, going back and going forward
         place_forward = self.place
         place_backward = self.place
-        already_doubled = []
+        ants_to_double = []
         entrance_transition = 0
-        while self.place_forward.entrance != None: #as long as it is not at end of tunnel, move forward
+        while place_forward.entrance != None: #as long as it is not at end of tunnel, move forward
 
-            if self.place.ants: #if there is an ant in the current place
+            if self.place.ant: #if there is an ant in the current place
+                ant = self.place.ant
+                if ant not in self.doubled_ants:
+                    self.doubled_ants.append(ant) #doubled_ants is an instance so it can exist outside this func
+                    ants_to_double.append(ant) #ants_to_double is a regular list to be used in throw_at
 
-                self.doubled_ants.append(ant)
-                already_doubled.append(ant)
-
-            place_forward = self.place.entrance
-
-            entrance_transition += 1
-
-        while self.place_backward.exit != None:
-
-            if self.place.ants: #if there is an ant in the current place
-
-                self.doubled_ants.append(ant)
-                already_doubled.append(ant)
-
-            place_backward = self.place.exit
+            place_forward = place_forward.entrance
 
             entrance_transition += 1
+
+        while place_backward.exit != None: #as long as it isn't at the end of a tunnel, move fwd
+
+            if self.place.ants: #if there is an ant in the current place
+                if ant not in self.doubled_ants:
+                    self.doubled_ants.append(ant)
+                    ants_to_double.append(ant)
+
+            place_backward = place_backward.exit
+
+            entrance_transition += 1
+        return ants_to_double
 
     def action(self, colony):
         """A queen ant throws a leaf, but also doubles the damage of ants
