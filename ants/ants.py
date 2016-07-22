@@ -620,21 +620,23 @@ class QueenAnt(ScubaThrower):  # You should change this line
     """The Queen of the colony.  The game is over if a bee enters her place."""
 
     name = 'Queen'
-    implemented = False
+    implemented = True
     #watersafe = True
     #food_cost = 6
+
+    queen_counter = 0
 
     def __init__(self):
         ScubaThrower.__init__(self,1)
         self.doubled_ants = []
+        self.queen_impostor = (QueenAnt.queen_counter >= 1)
+        QueenAnt.queen_counter += 1
 
     def throw_at(self, target):
         if target is not None:
             for ant in self.find_all_ants(self.place):
                 self.double_damage(ant)
             ScubaThrower.throw_at(self, target)
-
-
 
     def double_damage(self, ant):
         ant.damage *= 2
@@ -652,10 +654,7 @@ class QueenAnt(ScubaThrower):  # You should change this line
                 ant = place_forward.ant
                 if ant not in self.doubled_ants:
                     self.doubled_ants.append(ant) #doubled_ants is an instance so it can exist outside this func
-                    ants_to_double.append(ant) #ants_to_double is a regular list to be used in throw_at
-
-
-
+                    ants_to_double.append(ant) #ants_to_double is a regular list to be used in throw_at func
             entrance_transition += 1
 
         while place_backward.exit != None: #as long as it isn't at the end of a tunnel, move fwd
@@ -664,7 +663,7 @@ class QueenAnt(ScubaThrower):  # You should change this line
                 ant = place_backward.ant
                 if ant not in self.doubled_ants:
                     self.doubled_ants.append(ant)
-                    ants_to_double.append(ant)
+                    ants_to_double.append(ant) #ants_to_double is a regular list to be used in throw_at func
 
             entrance_transition += 1
         return ants_to_double
@@ -675,6 +674,10 @@ class QueenAnt(ScubaThrower):  # You should change this line
 
         Impostor queens do only one thing: reduce their own armor to 0.
         """
+        if self.queen_impostor:
+            self.reduce_armor(self.armor)
+            return
+
         colony.queen = QueenPlace(colony.queen, self.place) #colony.queen is a place, set it now to be under QueenPlace
 
         ThrowerAnt.action(self, colony)
