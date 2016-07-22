@@ -603,8 +603,10 @@ class BodyguardAnt(Ant):
 class QueenPlace:
     """A place that represents both places in which the bees find the queen.
 
-    (1) The original colony queen location at the end of all tunnels, and
-    (2) The place in which the QueenAnt resides.
+    (1) colony_queen: The original colony queen location at the end of all tunnels, and
+    (2) ant_queen: The PLACE in which the QueenAnt resides.
+    these are the same, but they reference different variables; colony_queen is a variable
+    within the colony and ant_queen is a variable within the queen ant. They are both places
     """
     def __init__(self, colony_queen, ant_queen):
         self.colony_queen = colony_queen
@@ -612,7 +614,7 @@ class QueenPlace:
 
     @property
     def bees(self):
-        return self.colony_queen.bees or self.ant_queen.place.bees
+        return self.colony_queen.bees + self.ant_queen.bees
 
 class QueenAnt(ScubaThrower):  # You should change this line
     """The Queen of the colony.  The game is over if a bee enters her place."""
@@ -630,6 +632,8 @@ class QueenAnt(ScubaThrower):  # You should change this line
         if target is not None:
             for ant in self.find_all_ants(self.place):
                 self.double_damage(ant)
+            ScubaThrower.throw_at(self, target)
+
 
 
     def double_damage(self, ant):
@@ -643,25 +647,24 @@ class QueenAnt(ScubaThrower):  # You should change this line
         ants_to_double = []
         entrance_transition = 0
         while place_forward.entrance != None: #as long as it is not at end of tunnel, move forward
-
-            if self.place.ant: #if there is an ant in the current place
-                ant = self.place.ant
+            place_forward = place_forward.entrance
+            if place_forward.ant: #if there is an ant in the current place
+                ant = place_forward.ant
                 if ant not in self.doubled_ants:
                     self.doubled_ants.append(ant) #doubled_ants is an instance so it can exist outside this func
                     ants_to_double.append(ant) #ants_to_double is a regular list to be used in throw_at
 
-            place_forward = place_forward.entrance
+
 
             entrance_transition += 1
 
         while place_backward.exit != None: #as long as it isn't at the end of a tunnel, move fwd
-
-            if self.place.ants: #if there is an ant in the current place
+            place_backward = place_backward.exit
+            if place_backward.ant: #if there is an ant in the current place
+                ant = place_backward.ant
                 if ant not in self.doubled_ants:
                     self.doubled_ants.append(ant)
                     ants_to_double.append(ant)
-
-            place_backward = place_backward.exit
 
             entrance_transition += 1
         return ants_to_double
@@ -672,9 +675,9 @@ class QueenAnt(ScubaThrower):  # You should change this line
 
         Impostor queens do only one thing: reduce their own armor to 0.
         """
-        colony.queen = QueenPlace(colony.queen, self) #colony.queen is a place, set it now to be under QueenPlace
+        colony.queen = QueenPlace(colony.queen, self.place) #colony.queen is a place, set it now to be under QueenPlace
 
-
+        ThrowerAnt.action(self, colony)
 
 class AntRemover(Ant):
     """Allows the player to remove ants from the board in the GUI."""
