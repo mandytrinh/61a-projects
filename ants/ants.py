@@ -21,6 +21,7 @@ class Place:
         exit -- The Place reached by exiting this Place (may be None).
         """
         self.name = name
+
         self.exit = exit
         self.bees = []        # A list of Bees
         self.ant = None       # An Ant
@@ -28,6 +29,7 @@ class Place:
         # Phase 1: Add an entrance to the exit
         if exit != None:
             exit.entrance = self
+
 
     def add_insect(self, insect):
         """Add an Insect to this Place.
@@ -56,10 +58,14 @@ class Place:
 
                 if self.ant.can_contain(insect):#if the Ant currently occupying this Place can contain the Ant we are trying to add
                     self.ant.contain_ant(insect) # then simply tell it to do so.
+                    insect.place = self
+                    return
 
                 if insect.can_contain(self.ant):#If the Ant we are trying to add can contain the Ant currently occupying this Place
                     insect.contain_ant(self.ant)#then have it do so
                     self.ant = insect #and set this Place's ant to be the newly added Ant.
+                    insect.place = self
+                    return
             else:
                 self.ant = insect
         else:
@@ -68,7 +74,9 @@ class Place:
 
     def remove_insect(self, insect):
         """Remove an Insect from this Place."""
-        if insect.is_ant:
+        if type(insect) == QueenAnt: #and not self.queen_impostor:
+            return
+        elif insect.is_ant:
             assert self.ant == insect, '{0} is not in {1}'.format(insect, self)
             # Phase 4: Special handling for BodyguardAnt and QueenAnt
             #if isinstance(self.ant, "BodyGuardAnt"):
@@ -175,8 +183,13 @@ class Ant(Insect):
         """Create an Ant with an armor quantity."""
         Insect.__init__(self, armor)
 
-    def can_contain(self,ant):
-        return self.container and (self.ant == None) and (not ant.container)
+    def can_contain(self,other_ant):
+        """ Return true if and only if:
+        1) This ant is a container.
+        2) This ant does not already contain another ant.
+        3) The other ant is not a container.
+        """
+        return self.container and (not self.ant) and (not other_ant.container)
 
 
 class HarvesterAnt(Ant):
@@ -590,8 +603,8 @@ class BodyguardAnt(Ant):
         Ant.__init__(self, 2)
         self.ant = None  # none means no ant is currently being protected
 
-    def contain_ant(self, ant):
-        self.ant = ant
+    def contain_ant(self, ant): #method takes an Ant argument
+        self.ant = ant #and sets the ant instance attribute to that argument
 
     def action(self, colony):
         """make sure that ants that are contained by BodyguardAnts still perform their action.
@@ -621,8 +634,7 @@ class QueenAnt(ScubaThrower):  # You should change this line
 
     name = 'Queen'
     implemented = True
-    #watersafe = True
-    #food_cost = 6
+    food_cost = 6
 
     queen_counter = 0
 
@@ -648,6 +660,10 @@ class QueenAnt(ScubaThrower):  # You should change this line
         place_backward = self.place
         ants_to_double = []
         entrance_transition = 0
+        if self.place.ant and self.place.ant not in self.doubled_ants and not type(self.place.ant)==QueenAnt:
+            self.doubled_ants.append(self.place.ant)
+            ants_to_double.append(self.place.ant)
+
         while place_forward.entrance != None: #as long as it is not at end of tunnel, move forward
             place_forward = place_forward.entrance
             if place_forward.ant: #if there is an ant in the current place
@@ -655,6 +671,12 @@ class QueenAnt(ScubaThrower):  # You should change this line
                 if ant not in self.doubled_ants:
                     self.doubled_ants.append(ant) #doubled_ants is an instance so it can exist outside this func
                     ants_to_double.append(ant) #ants_to_double is a regular list to be used in throw_at func
+
+                if type(ant) == BodyguardAnt and ant.ant and ant.ant not in self.doubled_ants:
+                    self.doubled_ants.append(ant.ant)
+                    self.doubled_ants.append(ant)
+                    ants_to_double.append(ant.ant)
+                    ants_to_double.append(ant)
             entrance_transition += 1
 
         while place_backward.exit != None: #as long as it isn't at the end of a tunnel, move fwd
@@ -665,13 +687,17 @@ class QueenAnt(ScubaThrower):  # You should change this line
                     self.doubled_ants.append(ant)
                     ants_to_double.append(ant) #ants_to_double is a regular list to be used in throw_at func
 
+                if type(ant) == BodyguardAnt and ant.ant and ant.ant not in self.doubled_ants:
+                    self.doubled_ants.append(ant.ant)
+                    self.doubled_ants.append(ant)
+                    ants_to_double.append(ant.ant)
+                    ants_to_double.append(ant)
             entrance_transition += 1
         return ants_to_double
 
     def action(self, colony):
         """A queen ant throws a leaf, but also doubles the damage of ants
         in her tunnel.
-
         Impostor queens do only one thing: reduce their own armor to 0.
         """
         if self.queen_impostor:
@@ -681,6 +707,8 @@ class QueenAnt(ScubaThrower):  # You should change this line
         colony.queen = QueenPlace(colony.queen, self.place) #colony.queen is a place, set it now to be under QueenPlace
 
         ThrowerAnt.action(self, colony)
+
+
 
 class AntRemover(Ant):
     """Allows the player to remove ants from the board in the GUI."""
@@ -701,7 +729,7 @@ def make_slow(action):
 
     action -- An action method of some Bee
     """
-    "*** YOUR CODE HERE ***"
+
 
 def make_stun(action):
     """Return a new action method that does nothing.
@@ -719,20 +747,21 @@ class SlowThrower(ThrowerAnt):
     """ThrowerAnt that causes Slow on Bees."""
 
     name = 'Slow'
-    "*** YOUR CODE HERE ***"
-    implemented = False
+    food_cost = 4
+    implemented = True
 
     def throw_at(self, target):
         if target:
             apply_effect(make_slow, target, 3)
 
 
+
 class StunThrower(ThrowerAnt):
     """ThrowerAnt that causes Stun on Bees."""
 
     name = 'Stun'
-    "*** YOUR CODE HERE ***"
-    implemented = False
+    food_cost = 6
+    implemented = True
 
     def throw_at(self, target):
         if target:
