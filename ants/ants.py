@@ -74,13 +74,14 @@ class Place:
 
     def remove_insect(self, insect):
         """Remove an Insect from this Place."""
-        if type(insect) == QueenAnt: #and not self.queen_impostor:
-            return
-        elif insect.is_ant:
+
+        if insect.is_ant:
             assert self.ant == insect, '{0} is not in {1}'.format(insect, self)
             # Phase 4: Special handling for BodyguardAnt and QueenAnt
             #if isinstance(self.ant, "BodyGuardAnt"):
-
+            if type(insect) == QueenAnt and insect.queen_impostor:
+                self.ant = None #set variable ant to be None
+                insect.place = None #set the place where the ant is to be none
             if insect.container and insect.ant: #If a BodyguardAnt containing another ant is removed
                 self.ant = insect.ant #the ant it is containing should be placed where the BodyguardAnt used to be
                 insect.place = None
@@ -703,7 +704,6 @@ class QueenAnt(ScubaThrower):  # You should change this line
             self.reduce_armor(self.armor)
             return
         colony.queen = QueenPlace(colony.queen, self.place) #colony.queen is a place, set it now to be under QueenPlace
-        #ThrowerAnt.action(self, colony)
         self.throw_at(self.nearest_bee(colony.hive))
 
 
