@@ -645,9 +645,9 @@ class QueenAnt(ScubaThrower):  # You should change this line
         QueenAnt.queen_counter += 1
 
     def throw_at(self, target):
+        for ant in self.find_all_ants(self.place):
+            self.double_damage(ant)
         if target is not None:
-            for ant in self.find_all_ants(self.place):
-                self.double_damage(ant)
             ScubaThrower.throw_at(self, target)
 
     def double_damage(self, ant):
@@ -660,6 +660,7 @@ class QueenAnt(ScubaThrower):  # You should change this line
         place_backward = self.place
         ants_to_double = []
         entrance_transition = 0
+
         if self.place.ant and self.place.ant not in self.doubled_ants and not type(self.place.ant)==QueenAnt:
             self.doubled_ants.append(self.place.ant)
             ants_to_double.append(self.place.ant)
@@ -674,9 +675,7 @@ class QueenAnt(ScubaThrower):  # You should change this line
 
                 if type(ant) == BodyguardAnt and ant.ant and ant.ant not in self.doubled_ants:
                     self.doubled_ants.append(ant.ant)
-                    self.doubled_ants.append(ant)
                     ants_to_double.append(ant.ant)
-                    ants_to_double.append(ant)
             entrance_transition += 1
 
         while place_backward.exit != None: #as long as it isn't at the end of a tunnel, move fwd
@@ -689,9 +688,9 @@ class QueenAnt(ScubaThrower):  # You should change this line
 
                 if type(ant) == BodyguardAnt and ant.ant and ant.ant not in self.doubled_ants:
                     self.doubled_ants.append(ant.ant)
-                    self.doubled_ants.append(ant)
+
                     ants_to_double.append(ant.ant)
-                    ants_to_double.append(ant)
+
             entrance_transition += 1
         return ants_to_double
 
@@ -703,10 +702,9 @@ class QueenAnt(ScubaThrower):  # You should change this line
         if self.queen_impostor:
             self.reduce_armor(self.armor)
             return
-
         colony.queen = QueenPlace(colony.queen, self.place) #colony.queen is a place, set it now to be under QueenPlace
-
-        ThrowerAnt.action(self, colony)
+        #ThrowerAnt.action(self, colony)
+        self.throw_at(self.nearest_bee(colony.hive))
 
 
 
