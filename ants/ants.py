@@ -727,6 +727,12 @@ def make_slow(action):
 
     action -- An action method of some Bee
     """
+    def new_action(colony):
+        if colony.time %2 == 0:
+            return action(colony)
+        else:
+            return None
+    return new_action
 
 
 def make_stun(action):
@@ -738,8 +744,12 @@ def make_stun(action):
 
 def apply_effect(effect, bee, duration):
     """Apply a status effect to a Bee that lasts for duration turns."""
-    "*** YOUR CODE HERE ***"
+    def helper(action):
+        while duration:
+            bee.action = effect(action)
+        action()
 
+    return helper
 
 class SlowThrower(ThrowerAnt):
     """ThrowerAnt that causes Slow on Bees."""
