@@ -138,28 +138,40 @@ def read_tail(src):
     try:
         if src.current() is None:
             raise SyntaxError('unexpected end of file')
+
         elif src.current() == ')':
+
             # BEGIN PROBLEM 1
-            src.remove_front()
-            return nil
+
+            src.remove_front() #remove the closing paren ')'
+            return nil #b/c it is end of src paramenter
+
             # END PROBLEM 1
+
         elif src.current() == '.':
+
             # BEGIN PROBLEM 2
-            follow = src.remove_front()
-            #print(follow)
-            rest = scheme_read(src)
-            if src.current() == ')':
-                src.remove_front()
+
+            follow = src.remove_front() #remove the dot
+            rest = scheme_read(src) #read the rest of the src without dot
+            if src.current() == ')': #if encounter a closing paren ')'
+                src.remove_front() #remove the closing paren ')'
                 return rest
             else:
                 raise SyntaxError
+
             # END PROBLEM 2
-        else:#read the next expression recursively until the matching closing paren
+
+        else:
+            #read the next expression recursively until the matching closing paren
             #and returns the results as a Pair instance
+
             # BEGIN PROBLEM 1
+
             first = scheme_read(src)
             rest = read_tail(src)
             return Pair(first, rest)
+
             # END PROBLEM 1
     except EOFError:
         raise SyntaxError('unexpected end of file')
