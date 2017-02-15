@@ -145,7 +145,14 @@ def read_tail(src):
             # END PROBLEM 1
         elif src.current() == '.':
             # BEGIN PROBLEM 2
-            while 
+            follow = src.remove_front()
+            #print(follow)
+            rest = scheme_read(src)
+            if src.current() == ')':
+                src.remove_front()
+                return rest
+            else:
+                raise SyntaxError
             # END PROBLEM 2
         else:#read the next expression recursively until the matching closing paren
             #and returns the results as a Pair instance
