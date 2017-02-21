@@ -1,0 +1,77 @@
+Assignment: Project 4: A Scheme Interpreter
+OK, version v1.10.0
+=====================================================================
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Unlocking tests
+
+At each "? ", type what you would expect the output to be.
+Type exit() to quit
+
+---------------------------------------------------------------------
+Question 3 > Suite 1 > Case 1
+(cases remaining: 5)
+
+>>> from scheme import *
+>>> global_frame = create_global_frame()
+>>> global_frame.define("x", 3)
+>>> global_frame.parent is None
+
+
+? True
+-- OK! --
+
+>>> global_frame.lookup("x")
+? 3
+-- OK! --
+
+>>> global_frame.define("x", 2)
+>>> global_frame.lookup("x")
+? 2
+-- OK! --
+
+>>> global_frame.lookup("foo")
+Choose the number of the correct choice:
+0) None
+1) SchemeError
+2) 3
+
+? 1
+-- OK! --
+
+---------------------------------------------------------------------
+Question 3 > Suite 1 > Case 2
+(cases remaining: 4)
+
+>>> from scheme import *
+>>> first_frame = create_global_frame()
+>>> first_frame.define("x", 3)
+>>> second_frame = Frame(first_frame)
+>>> second_frame.parent == first_frame
+? True
+-- OK! --
+
+>>> second_frame.lookup("x")
+? 3
+-- OK! --
+
+---------------------------------------------------------------------
+Question 3 > Suite 1 > Case 3
+(cases remaining: 3)
+
+-- Already unlocked --
+
+---------------------------------------------------------------------
+Question 3 > Suite 1 > Case 4
+(cases remaining: 2)
+
+-- Already unlocked --
+
+---------------------------------------------------------------------
+Question 3 > Suite 2 > Case 1
+(cases remaining: 1)
+
+-- Already unlocked --
+
+---------------------------------------------------------------------
+OK! All cases for Question 3 unlocked.
