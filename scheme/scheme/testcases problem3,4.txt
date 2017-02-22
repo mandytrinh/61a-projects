@@ -124,3 +124,75 @@ Question 4 > Suite 1 > Case 4
 ---------------------------------------------------------------------
 OK! All cases for Question 4 unlocked.
 
+
+Assignment: Project 4: A Scheme Interpreter
+OK, version v1.10.0
+=====================================================================
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Unlocking tests
+
+At each "? ", type what you would expect the output to be.
+Type exit() to quit
+
+---------------------------------------------------------------------
+Question 5 > Suite 1 > Case 1
+(cases remaining: 4)
+
+>>> from scheme_reader import *
+>>> from scheme import *
+>>> expr = read_line('(+ 2 2)')
+>>> expr
+? Pair('+', Pair(2, Pair(2, nil)))
+-- OK! --
+
+>>> scheme_eval(expr, create_global_frame()) # Type SchemeError if you think this errors
+? 4
+-- OK! --
+
+>>> expr = read_line('(+ (+ 2 2) (+ 1 3) (* 1 4))')
+>>> scheme_eval(expr, create_global_frame()) # Type SchemeError if you think this errors
+? 12
+-- OK! --
+
+>>> expr = read_line('(yolo)')
+>>> scheme_eval(expr, create_global_frame()) # Type SchemeError if you think this errors
+? SchemeError
+-- OK! --
+
+---------------------------------------------------------------------
+Question 5 > Suite 2 > Case 1
+(cases remaining: 3)
+
+
+scm> (+ 2 3) ; Type SchemeError if you think this errors
+? 5
+-- OK! --
+
+scm> (* (+ 3 2) (+ 1 7)) ; Type SchemeError if you think this errors
+? 40
+-- OK! --
+
+scm> (1 2) ; Type SchemeError if you think this errors
+? SchemeError
+-- OK! --
+
+scm> (1 (print 0)) ; check_procedure should be called before operands are evaluated
+? SchemeError
+-- OK! --
+
+---------------------------------------------------------------------
+Question 5 > Suite 2 > Case 2
+(cases remaining: 2)
+
+-- Already unlocked --
+
+---------------------------------------------------------------------
+Question 5 > Suite 2 > Case 3
+(cases remaining: 1)
+
+-- Already unlocked --
+
+---------------------------------------------------------------------
+OK! All cases for Question 5 unlocked.
+
