@@ -136,17 +136,21 @@ class PrimitiveProcedure(Procedure):
         4
         """
         # Convert a Scheme list to a Python list
+
         python_args = []
         while args is not nil:
             python_args.append(args.first)
             args = args.second
+
         # BEGIN PROBLEM 4
+
         if self.use_env == True:
-            python_args.append(self.env)
+            python_args.append(env)
         try:
-            self.fn(*python_args)
+            return self.fn(*python_args)
         except TypeError:
             raise SchemeError('Wrong number of Parameters')
+
         # END PROBLEM 4
 
 class UserDefinedProcedure(Procedure):
