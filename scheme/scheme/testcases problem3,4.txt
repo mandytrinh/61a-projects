@@ -75,3 +75,52 @@ Question 3 > Suite 2 > Case 1
 
 ---------------------------------------------------------------------
 OK! All cases for Question 3 unlocked.
+
+
+---------------------------------------------------------------------
+Question 4 > Suite 1 > Case 1
+(cases remaining: 4)
+
+>>> from scheme import *
+>>> env = create_global_frame()
+>>> twos = Pair(2, Pair(2, nil))
+>>> plus = PrimitiveProcedure(scheme_add) # + procedure
+>>> scheme_apply(plus, twos, env)
+Choose the number of the correct choice:
+
+0) 4
+1) SchemeError
+? 4
+-- OK! --
+
+---------------------------------------------------------------------
+Question 4 > Suite 1 > Case 2
+(cases remaining: 3)
+
+>>> from scheme import *
+>>> env = create_global_frame()
+>>> twos = Pair(2, Pair(2, nil))
+>>> oddp = PrimitiveProcedure(scheme_oddp) # odd? procedure
+>>> scheme_apply(oddp, twos, env)
+Choose the number of the correct choice:
+0) True
+1) SchemeError
+2) False
+? 1
+-- OK! --
+
+---------------------------------------------------------------------
+Question 4 > Suite 1 > Case 3
+(cases remaining: 2)
+
+-- Already unlocked --
+
+---------------------------------------------------------------------
+Question 4 > Suite 1 > Case 4
+(cases remaining: 1)
+
+-- Already unlocked --
+
+---------------------------------------------------------------------
+OK! All cases for Question 4 unlocked.
+
