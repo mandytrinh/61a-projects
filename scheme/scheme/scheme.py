@@ -223,9 +223,12 @@ def do_define_form(expressions, env):
 	if scheme_symbolp(target):
 		check_form(expressions, 2, 2)
 		# BEGIN PROBLEM 6
-		scheme.eval(expressions.rest, env)
-		return target
+
+		env.bindings[target] = scheme_eval(expressions.second, env)
+		
+		#return env.bindings[target]
 		# END PROBLEM 6
+		
 	elif isinstance(target, Pair) and scheme_symbolp(target.first):
 		# BEGIN PROBLEM 10
 		"*** REPLACE THIS LINE ***"
