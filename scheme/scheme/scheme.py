@@ -32,14 +32,11 @@ def scheme_eval(expr, env, _=None): # Optional third argument is ignored
 	else:
 		
 		# BEGIN PROBLEM 5 - evaluating a call expression
+		
+		procedure = scheme_eval(first, env)
+		args = rest.map(lambda operand: scheme_eval(operand, env)) #evaluate the operand, rest, by applying the function lambda operand, calling scheme_eval recursively on every item in rest. Returns returns a list of results, args
 
-		procedure = scheme_eval(first, env) #1) evaluate the operator, first, e.g. the + in +2 2
-
-		if check_procedure(procedure): #checks that procedure is a procedure
-
-			args = rest.map(lambda operand: scheme_eval(operand, env)) #evaluate the operand, rest, by applying the function lambda operand, calling scheme_eval recursively on every item in rest. Returns returns a list of results, args
-
-			return scheme_apply(procedure, args, env) #applies procedure to args (list of results)
+		return scheme_apply(procedure, args, env) #applies procedure to args (list of results)
 
 		# END PROBLEM 5
 
@@ -223,10 +220,8 @@ def do_define_form(expressions, env):
 	if scheme_symbolp(target):
 		check_form(expressions, 2, 2)
 		# BEGIN PROBLEM 6
-
 		env.bindings[target] = scheme_eval(expressions.second, env)
-		
-		#return env.bindings[target]
+		#return target
 		# END PROBLEM 6
 		
 	elif isinstance(target, Pair) and scheme_symbolp(target.first):
