@@ -292,3 +292,89 @@ Question 6 > Suite 2 > Case 4
 ---------------------------------------------------------------------
 OK! All cases for Question 6 unlocked.
 
+
+
+Unlocking tests
+
+At each "? ", type what you would expect the output to be.
+Type exit() to quit
+
+---------------------------------------------------------------------
+Question 7 > Suite 1 > Case 1
+(cases remaining: 6)
+
+Q: What is the structure of the expressions argument to do_quote_form?
+Choose the number of the correct choice:
+0) Pair('quote', Pair(A, nil)), where:
+       A is the quoted expression
+1) Pair(A, nil), where:
+       A is the quoted expression
+2) A, where:
+       A is the quoted expression
+3) [A], where:
+       A is the quoted expression
+? 1
+-- OK! --
+
+---------------------------------------------------------------------
+Question 7 > Suite 2 > Case 1
+(cases remaining: 5)
+
+
+scm> (quote hello)
+? hello
+-- OK! --
+
+scm> 'hello
+? hello
+-- OK! --
+
+scm> ''hello
+Choose the number of the correct choice:
+0) (quote hello)
+1) hello
+2) (hello)
+3) (quote (quote (hello)))
+? 0
+-- OK! --
+
+scm> (quote (1 2))
+? (1 2)
+-- OK! --
+
+scm> '(1 2)
+? (1 2)
+-- OK! --
+
+scm> (quote (1 . 2))
+? (1 . 2)
+-- OK! --
+
+scm> '(1 . (2))
+
+? (1 2)
+-- OK! --
+
+scm> (car '(1 2 3))
+? 1
+-- OK! --
+
+scm> (cdr '(1 2))
+
+
+? (2)
+-- OK! --
+
+scm> (car (car '((1))))
+? 1
+-- OK! --
+
+scm> (quote 3)
+? 3
+-- OK! --
+
+scm> (eval (cons 'car '('(4 2))))
+? 4
+-- OK! --
+
+
