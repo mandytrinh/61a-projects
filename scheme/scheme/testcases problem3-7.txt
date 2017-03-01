@@ -377,4 +377,56 @@ scm> (eval (cons 'car '('(4 2))))
 ? 4
 -- OK! --
 
+Question 7 > Suite 3 > Case 1
+(cases remaining: 4)
+
+>>> from scheme_reader import *
+>>> read_line(" (quote x) ")
+
+? Pair('quote', Pair('x', nil))
+-- OK! --
+
+>>> read_line(" 'x ")
+Choose the number of the correct choice:
+0) Pair('x', nil)
+1) Pair('quote', Pair('x', nil))
+2) Pair('quote', 'x')
+3) 'x'
+? 1
+-- OK! --
+
+>>> read_line(" (a b) ")
+
+
+Choose the number of the correct choice:
+0) Pair('quote', Pair(Pair('a', Pair('b', nil)), nil))
+1) Pair('a', Pair('b', nil))
+2) Pair('quote', Pair('a', 'b'))
+3) Pair('quote', Pair('a', Pair('b', nil)))
+? 1
+-- OK! --
+
+>>> read_line(" '(a b) ")
+Choose the number of the correct choice:
+
+
+Choose the number of the correct choice:
+0) Pair('quote', Pair('a', Pair('b', nil)))
+1) Pair('quote', Pair('a', 'b'))
+2) Pair('quote', Pair(Pair('a', Pair('b', nil)), nil))
+3) Pair('a', Pair('b', nil))
+? 2
+-- OK! --
+
+>>> read_line(" '((a)) ")
+
+Choose the number of the correct choice:
+0) Pair('quote', Pair(Pair('a', nil), nil))
+1) Pair('quote', Pair(Pair('a', nil), nil), nil)
+2) Pair('quote', Pair(Pair(Pair('a', nil), nil), nil))
+3) Pair('quote', Pair(Pair('a'), nil))
+4) Pair('quote', Pair(Pair('a'), nil), nil)
+? 2
+-- OK! --
+
 
