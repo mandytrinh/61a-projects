@@ -378,3 +378,98 @@ scm> (eval (cons 'car '('(4 2))))
 -- OK! --
 
 
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Unlocking tests
+
+At each "? ", type what you would expect the output to be.
+Type exit() to quit
+
+---------------------------------------------------------------------
+Question 8 > Suite 1 > Case 1
+(cases remaining: 6)
+
+>>> from scheme import *
+>>> env = create_global_frame()
+>>> eval_all(Pair(2, nil), env)
+? 2
+-- OK! --
+
+>>> eval_all(Pair(4, Pair(5, nil)), env)
+
+? 4 5
+-- Not quite. Try again! --
+
+? 5
+-- OK! --
+
+>>> eval_all(nil, env) # return None (meaning undefined)
+---------------------------------------------------------------------
+Question 8 > Suite 1 > Case 2
+(cases remaining: 5)
+
+-- Already unlocked --
+
+---------------------------------------------------------------------
+Question 8 > Suite 2 > Case 1
+(cases remaining: 4)
+
+
+scm> (begin (+ 2 3) (+ 5 6))
+? 11
+-- OK! --
+
+scm> (begin (define x 3) x)
+? x
+-- Not quite. Try again! --
+
+? 3
+-- OK! --
+
+---------------------------------------------------------------------
+Question 8 > Suite 2 > Case 2
+(cases remaining: 3)
+
+
+scm> (begin 30 '(+ 2 2))
+
+
+Choose the number of the correct choice:
+0) 30
+1) '(+ 2 2)
+2) (+ 2 2)
+3) 4
+? 2
+-- OK! --
+
+scm> (define x 0)
+? x
+-- OK! --
+
+scm> (begin 42 (define x (+ x 1)))
+
+
+? x
+-- OK! --
+
+scm> x
+
+
+? 1
+-- OK! --
+
+---------------------------------------------------------------------
+Question 8 > Suite 2 > Case 3
+(cases remaining: 2)
+
+-- Already unlocked --
+
+---------------------------------------------------------------------
+Question 8 > Suite 2 > Case 4
+(cases remaining: 1)
+
+-- Already unlocked --
+
+---------------------------------------------------------------------
+OK! All cases for Question 8 unlocked.
+
