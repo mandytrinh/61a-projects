@@ -449,8 +449,6 @@ Question 8 > Suite 1 > Case 1
 
 >>> eval_all(Pair(4, Pair(5, nil)), env)
 
-? 4 5
--- Not quite. Try again! --
 
 ? 5
 -- OK! --
@@ -472,8 +470,6 @@ scm> (begin (+ 2 3) (+ 5 6))
 -- OK! --
 
 scm> (begin (define x 3) x)
-? x
--- Not quite. Try again! --
 
 ? 3
 -- OK! --
