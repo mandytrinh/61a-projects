@@ -1,3 +1,71 @@
+Question 1 > Suite 1 > Case 2
+(cases remaining: 6)
+
+>>> from scheme_reader import *
+>>> src = Buffer(tokenize_lines(["(+ 1 ", "(+ 23 4)) ("]))
+>>> src.current()
+
+? "("
+-- OK! --
+
+>>> src.remove_front()
+? "("
+-- OK! --
+
+>>> src.current()
+? "+"
+-- OK! --
+
+>>> src.remove_front()
+? "+"
+-- OK! --
+
+>>> src.remove_front()
+
+? 1
+-- OK! --
+
+>>> scheme_read(src)
+? Pair('+', Pair(23, Pair(4, nil)))
+-- OK! --
+
+>>> src.current()
+
+? ")"
+-- OK! --
+
+---------------------------------------------------------------------
+Question 1 > Suite 1 > Case 3
+(cases remaining: 5)
+
+>>> from scheme_reader import *
+>>> scheme_read(Buffer(tokenize_lines(['(+ 23 4)'])))
+? Pair('+', Pair(23, Pair(4, nil)))
+-- OK! --
+
+>>> read_line('(+ 23 4)')  # Shorter version of above!
+
+? Pair('+', Pair(23, Pair(4, nil)))
+-- OK! --
+
+---------------------------------------------------------------------
+Question 1 > Suite 1 > Case 4
+(cases remaining: 4)
+
+>>> from scheme_reader import *
+>>> read_tail(Buffer(tokenize_lines([')'])))
+? nil
+-- OK! --
+
+>>> read_tail(Buffer(tokenize_lines(['2 3)'])))
+? Pair(2, Pair(3, nil))
+-- OK! --
+
+>>> read_tail(Buffer(tokenize_lines(['2 (3 4))'])))
+
+
+
+
 Assignment: Project 4: A Scheme Interpreter
 OK, version v1.10.0
 =====================================================================
@@ -520,4 +588,30 @@ Question 8 > Suite 2 > Case 4
 
 ---------------------------------------------------------------------
 OK! All cases for Question 8 unlocked.
+
+
+scm> (lambda (x y) (+ x y))
+? (lambda (x y) (+ x y))
+-- OK! --
+
+---------------------------------------------------------------------
+Question 9 > Suite 1 > Case 2
+(cases remaining: 3)
+
+-- Already unlocked --
+
+---------------------------------------------------------------------
+Question 9 > Suite 1 > Case 3
+(cases remaining: 2)
+
+-- Already unlocked --
+
+---------------------------------------------------------------------
+Question 9 > Suite 2 > Case 1
+(cases remaining: 1)
+
+-- Already unlocked --
+
+---------------------------------------------------------------------
+OK! All cases for Question 9 unlocked.
 
