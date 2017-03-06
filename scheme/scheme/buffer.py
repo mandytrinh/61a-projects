@@ -10,7 +10,7 @@ class Buffer:
     the end of data.
 
     The Buffer in effect concatenates the sequences returned from its source
-    and then supplies the items from them one at a time through its remove_front()
+    and then supplies the items from them one at a time through its pop()
     method, calling the source for more sequences of items only when needed.
 
     In addition, Buffer provides a current method to look at the
@@ -20,32 +20,32 @@ class Buffer:
     current line, and marks the current token with >>.
 
     >>> buf = Buffer(iter([['(', '+'], [15], [12, ')']]))
-    >>> buf.remove_front()
+    >>> buf.pop()
     '('
-    >>> buf.remove_front()
+    >>> buf.pop()
     '+'
     >>> buf.current()
     15
     >>> print(buf)
     1: ( +
     2:  >> 15
-    >>> buf.remove_front()
+    >>> buf.pop()
     15
     >>> buf.current()
     12
-    >>> buf.remove_front()
+    >>> buf.pop()
     12
     >>> print(buf)
     1: ( +
     2: 15
     3: 12 >> )
-    >>> buf.remove_front()
+    >>> buf.pop()
     ')'
     >>> print(buf)
     1: ( +
     2: 15
     3: 12 ) >>
-    >>> buf.remove_front()  # returns None
+    >>> buf.pop()  # returns None
     """
     def __init__(self, source):
         self.index = 0
@@ -54,12 +54,16 @@ class Buffer:
         self.current_line = ()
         self.current()
 
-    def remove_front(self):
+    def pop(self):
         """Remove the next item from self and return it. If self has
         exhausted its source, returns None."""
         current = self.current()
         self.index += 1
         return current
+
+    @property
+    def more_on_line(self):
+        return self.index < len(self.current_line)
 
     def current(self):
         """Return the current element, or None if none exists."""
@@ -72,10 +76,6 @@ class Buffer:
                 self.current_line = ()
                 return None
         return self.current_line[self.index]
-
-    @property
-    def more_on_line(self):
-        return self.index < len(self.current_line)
 
     def __str__(self):
         """Return recently read contents; current element marked with >>."""

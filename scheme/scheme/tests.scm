@@ -272,17 +272,17 @@ z
   (newline))
 (define one-half (make-rat 1 2))
 (print-rat one-half)
-; expect 1/2
+; expect 1/2 ; okay
 
 (define one-third (make-rat 1 3))
 (print-rat (add-rat one-half one-third))
-; expect 5/6
+; expect 5/6 ; okay
 
 (print-rat (mul-rat one-half one-third))
-; expect 1/6
+; expect 1/6 ; okay
 
 (print-rat (add-rat one-third one-third))
-; expect 6/9
+; expect 6/9 ; okay
 
 (define (gcd a b)
   (if (= b 0)
@@ -292,7 +292,7 @@ z
   (let ((g (gcd n d)))
     (cons (/ n g) (/ d g))))
 (print-rat (add-rat one-third one-third))
-; expect 2/3
+; expect 2/3 ; okay
 
 (define one-through-four (list 1 2 3 4))
 one-through-four
@@ -407,7 +407,7 @@ one-through-four
 
 (define (memq item x)
   (cond ((null? x) false)
-        ((equal? item (car x)) x)
+        ((eq? item (car x)) x)
         (else (memq item (cdr x)))))
 (memq 'apple '(pear banana prune))
 ; expect False
@@ -415,19 +415,19 @@ one-through-four
 (memq 'apple '(x (apple sauce) y apple pear))
 ; expect (apple pear)
 
-(define (my-equal? x y)
+(define (equal? x y)
   (cond ((pair? x) (and (pair? y)
-                        (my-equal? (car x) (car y))
-                        (my-equal? (cdr x) (cdr y))))
+                        (equal? (car x) (car y))
+                        (equal? (cdr x) (cdr y))))
         ((null? x) (null? y))
-        (else (equal? x y))))
-(my-equal? '(1 2 (three)) '(1 2 (three)))
+        (else (eq? x y))))
+(equal? '(1 2 (three)) '(1 2 (three)))
 ; expect True
 
-(my-equal? '(1 2 (three)) '(1 2 three))
+(equal? '(1 2 (three)) '(1 2 three))
 ; expect False
 
-(my-equal? '(1 2 three) '(1 2 (three)))
+(equal? '(1 2 three) '(1 2 (three)))
 ; expect False
 
 ;;; Peter Norvig tests (http://norvig.com/lispy2.html)
@@ -582,27 +582,9 @@ one-through-four
 
 (exit)
 
-; Tail call optimization tests
-
+; Tail call optimization test
 (define (sum n total)
   (if (zero? n) total
     (sum (- n 1) (+ n total))))
-(sum 1001 0)
-; expect 501501
-
-(define (sum n total)
-  (cond ((zero? n) total)
-        (else (sum (- n 1) (+ n total)))))
-(sum 1001 0)
-; expect 501501
-
-(define (sum n total)
-  (begin 2 3
-    (if (zero? n) total
-      (and 2 3
-        (or false
-          (begin 2 3
-            (let ((m n))
-              (sum (- m 1) (+ m total)))))))))
 (sum 1001 0)
 ; expect 501501

@@ -124,10 +124,7 @@ def count_tokens(input):
 
 @main
 def run(*args):
-    import argparse
-    parser = argparse.ArgumentParser(description='Count Scheme tokens.')
-    parser.add_argument('file', nargs='?',
-                        type=argparse.FileType('r'), default=sys.stdin,
-                        help='input file to be counted')
-    args = parser.parse_args()
-    print('counted', count_tokens(args.file), 'non-delimiter tokens')
+    file = sys.stdin
+    if args:
+        file = open(args[0], 'r')
+    print('counted', count_tokens(file), 'non-delimiter tokens')
