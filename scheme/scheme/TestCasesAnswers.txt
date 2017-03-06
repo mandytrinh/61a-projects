@@ -113,3 +113,37 @@ Choose the number of the correct choice:
 ? 0
 OK!
 
+
+At each "? ", type in what you would expect the output to be.
+Type exit() to quit
+Unlocking tests for q03
+=======================
+
+Case 1
+------
+>>> env = create_global_frame()
+>>> twos = Pair(2, Pair(2, nil))
+>>> plus = PrimitiveProcedure(scheme_add) # + procedure
+>>> scheme_apply(plus, twos, env)
+Choose the number of the correct choice:
+0) 4
+1) SchemeError
+? 0
+OK!
+-- Congratulations, you unlocked this case! --
+
+Case 2
+------
+>>> env = create_global_frame()
+>>> twos = Pair(2, Pair(2, nil))
+>>> oddp = PrimitiveProcedure(scheme_oddp) # odd? procedure
+>>> scheme_apply(oddp, twos, env)
+Choose the number of the correct choice:
+0) SchemeError
+1) False
+2) True
+? 0
+OK!
+-- Congratulations, you unlocked this case! --
+
+You are done unlocking tests for this question!
