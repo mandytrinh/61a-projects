@@ -147,3 +147,53 @@ OK!
 -- Congratulations, you unlocked this case! --
 
 You are done unlocking tests for this question!
+
+
+
+At each "? ", type in what you would expect the output to be.
+Type exit() to quit
+Unlocking tests for q04
+=======================
+
+Case 1
+------
+>>> global_frame = create_global_frame()
+>>> global_frame.define("x", 3)
+>>> global_frame.parent   # parent of the global frame
+? x
+
+? None
+OK!
+>>> global_frame.lookup("x")
+? 3
+OK!
+>>> global_frame.lookup("foo")
+
+Choose the number of the correct choice:
+0) SchemeError
+1) 3
+2) None
+? 0
+OK!
+-- Congratulations, you unlocked this case! --
+
+Case 2
+------
+>>> first_frame = create_global_frame()
+>>> first_frame.define("x", 3)
+>>> second_frame = Frame(first_frame)
+>>> second_frame.parent
+Choose the number of the correct choice:
+0) None
+1) second_frame
+2) first_frame
+? 2
+OK!
+>>> second_frame.lookup("x")
+? 3
+OK!
+-- Congratulations, you unlocked this case! --
+
+You are done unlocking tests for this question!
+
+
