@@ -197,3 +197,81 @@ OK!
 You are done unlocking tests for this question!
 
 
+Case 1
+------
+Q: What is the structure of the argument vals?
+
+
+
+Choose the number of the correct choice:
+0) 
+          Pair('define', Pair(A, Pair(B, nil))), where:
+            A is the symbol being bound,
+            B is an expression whose value should be bound to A
+          
+1) 
+          Pair(A, Pair(B, nil)), where:
+          A is the symbol being bound,
+          B is an expression whose value should be bound to A
+          
+2) 
+          Pair(A, B), where:
+            A is the symbol being bound,
+            B is the value that should be bound to A
+          
+3) 
+          Pair(A, Pair(B, nil)), where:
+            A is the symbol being bound,
+            B is the value that should be bound to A
+          
+4) 
+          Pair(A, B), where:
+            A is the symbol being bound,
+            B is an expression whose value should be bound to A
+          
+? 1
+OK!
+-- Congratulations, you unlocked this case! --
+
+Case 2
+------
+Q: What method of a Frame instance will bind
+a value to a symbol in that frame?
+
+Choose the number of the correct choice:
+0) lookup
+1) bindings
+2) define
+3) make_call_frame
+? 2
+OK!
+-- Congratulations, you unlocked this case! --
+
+Case 3
+------
+>>> eval('''
+...   (define size 2)
+...   size
+... ''')
+Choose the number of the correct choice:
+0) None
+1) 2
+2) SchemeError
+3) 'size'
+? 1
+OK!
+>>> eval('''
+...   (define x (+ 2 3))
+...   x
+... ''')
+Choose the number of the correct choice:
+0) Pair('+', Pair(2, Pair(3, nil)))
+1) 5
+2) SchemeError
+? 1
+OK!
+-- Congratulations, you unlocked this case! --
+
+You are done unlocking tests for this question!
+
+
