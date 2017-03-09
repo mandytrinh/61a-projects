@@ -216,10 +216,10 @@ def do_define_form(vals, env):
     if scheme_symbolp(target):
         check_form(vals, 2, 2)
         "*** CODE BELOW ***"
-
+        env.bindings[target] = scheme_eval(vals[1], env)
+        return target
     elif isinstance(target, Pair):
         "*** CODE BELOW ***"
-
 
     else:
         raise SchemeError("bad argument to define")
