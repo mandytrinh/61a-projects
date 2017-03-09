@@ -1,0 +1,149 @@
+You are running version v1.3.0 of ok.py
+######################################
+Unlocking tests for cal/61A/fa14/proj4
+######################################
+
+At each "? ", type in what you would expect the output to be.
+Type exit() to quit
+Unlocking tests for q01
+=======================
+
+Case 2
+------
+>>> read_line("'x")
+Choose the number of the correct choice:
+0) 'x'
+1) Pair('quote', Pair('x', nil))
+2) Pair('x', nil)
+3) Pair('quote', 'x')
+? 1
+OK!
+>>> read_line("(quote x)")
+Choose the number of the correct choice:
+0) Pair('quote', 'x')
+1) Pair('x', nil)
+2) Pair('quote', Pair('x', nil))
+3) 'x'
+? 2
+OK!
+>>> read_line("'(a b)")
+
+Choose the number of the correct choice:
+0) Pair('a', Pair('b', nil))
+1) Pair('quote', Pair(Pair('a', Pair('b', nil)), nil))
+2) Pair('quote', Pair('a', Pair('b', nil)))
+3) Pair('quote', Pair('a', 'b'))
+? 1
+OK!
+>>> read_line("'((a))")
+Choose the number of the correct choice:
+0) Pair('quote', Pair(Pair('a', nil), nil))
+1) Pair('quote', Pair(Pair('a', nil), nil), nil)
+2) Pair('quote', Pair(Pair('a'), nil))
+3) Pair('quote', Pair(Pair(Pair('a', nil), nil), nil))
+4) Pair('quote', Pair(Pair('a'), nil), nil)
+? 3
+OK!
+-- Congratulations, you unlocked this case! --
+
+You are done unlocking tests for this question!
+
+
+$ python ok -q 2 -u --local
+You are running version v1.3.0 of ok.py
+######################################
+Unlocking tests for cal/61A/fa14/proj4
+######################################
+
+At each "? ", type in what you would expect the output to be.
+Type exit() to quit
+Unlocking tests for q02
+=======================
+
+Case 1
+------
+>>> read_line("(a . b)")
+
+
+Choose the number of the correct choice:
+0) Pair('a', 'b')
+1) Pair('a', Pair('b', nil))
+2) Pair('a', 'b', nil)
+3) Pair('a', Pair('b'))
+4) SyntaxError
+? 0
+OK!
+>>> read_line("(a b . c)")
+Choose the number of the correct choice:
+0) SyntaxError
+1) Pair('a', 'b', 'c')
+2) Pair('a', Pair('b', 'c'))
+3) Pair('a', Pair('b', Pair('c')))
+4) Pair('a', Pair('b', Pair('c', nil)))
+? 2
+OK!
+-- Congratulations, you unlocked this case! --
+
+Case 2
+------
+>>> read_line("(a b . c d)")
+Choose the number of the correct choice:
+0) SyntaxError
+1) Pair('a', Pair('b', Pair('c', 'd')))
+2) Pair('a', Pair('b', 'c'))
+3) Pair('a', Pair('b', Pair('c', Pair('d', nil))))
+? 0
+OK!
+>>> read_line("(a . (b . (c . ())))")
+
+
+Choose the number of the correct choice:
+0) Pair('a', Pair('b', Pair('c', nil)))
+1) Pair('a', Pair('b', Pair('c', Pair(nil, nil))))
+2) Pair('a', 'b', 'c')
+3) SyntaxError
+? 0
+OK!
+>>> read_line("(a . ((b . (c)))))")
+Choose the number of the correct choice:
+0) Pair('a', Pair(Pair('b', Pair('c', nil)), nil))
+1) Pair('a', Pair('b', Pair('c', nil)), nil)
+2) Pair('a', Pair(Pair('b', Pair('c', nil)), nil), nil)
+3) Pair('a', Pair('b', Pair('c')), nil)
+? 0
+OK!
+
+
+At each "? ", type in what you would expect the output to be.
+Type exit() to quit
+Unlocking tests for q03
+=======================
+
+Case 1
+------
+>>> env = create_global_frame()
+>>> twos = Pair(2, Pair(2, nil))
+>>> plus = PrimitiveProcedure(scheme_add) # + procedure
+>>> scheme_apply(plus, twos, env)
+Choose the number of the correct choice:
+0) 4
+1) SchemeError
+? 0
+OK!
+-- Congratulations, you unlocked this case! --
+
+Case 2
+------
+>>> env = create_global_frame()
+>>> twos = Pair(2, Pair(2, nil))
+>>> oddp = PrimitiveProcedure(scheme_oddp) # odd? procedure
+>>> scheme_apply(oddp, twos, env)
+Choose the number of the correct choice:
+0) SchemeError
+1) False
+2) True
+? 0
+OK!
+-- Congratulations, you unlocked this case! --
+
+You are done unlocking tests for this question!
