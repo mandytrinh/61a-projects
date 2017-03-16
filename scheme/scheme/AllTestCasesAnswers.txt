@@ -147,3 +147,77 @@ OK!
 -- Congratulations, you unlocked this case! --
 
 You are done unlocking tests for this question!
+
+
+
+Unlocking tests for q06B
+========================
+
+Case 1
+------
+Q: What does the parameter vals look like?
+
+Choose the number of the correct choice:
+0)
+          Pair(A, nil), where:
+            A is the quoted expression
+
+1)
+          [A], where:
+            A is the quoted expression
+
+2)
+          Pair('quote', Pair(A, nil)), where:
+            A is the quoted expression
+
+? 0
+OK!
+-- Congratulations, you unlocked this case! --
+
+Case 2
+------
+>>> eval("(quote 3)")
+Choose the number of the correct choice:
+0) 3
+1) Pair(3, nil)
+2) Pair('quote', Pair(3, nil))
+? 0
+OK!
+
+>>> eval("(quote (1 2))")
+
+Choose the number of the correct choice:
+0) Pair(1, Pair(2, nil))
+1) SchemeError
+2) Pair(1, 2)
+3) Pair('quote', Pair(1, Pair(2, nil)))
+? 0
+OK!
+>>> eval("(car '(1 2 3))")
+? 1
+OK!
+>>> eval("(car (car '((1))))")
+? 1
+OK!
+>>> eval("'hello")
+Choose the number of the correct choice:
+0) Pair('quote', Pair('hello', nil))
+1) 'hello'
+2) Pair('hello', nil)
+? 1
+OK!
+>>> eval("''hello")
+
+
+Choose the number of the correct choice:
+0) Pair('hello', nil)
+1) Pair('quote', Pair('hello', nil))
+2) Pair('quote', Pair('quote', Pair('hello', nil)))
+3) 'hello'
+? 1
+OK!
+-- Congratulations, you unlocked this case! --
+
+You are done unlocking tests for this question!
+
+

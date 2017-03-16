@@ -74,14 +74,14 @@ def apply_primitive(procedure, args, env):
     >>> apply_primitive(plus, twos, env)
     4
     """
-    python_args = []
+    python_args_list = []
     while args is not nil:
-        python_args.append(args.first)
+        python_args_list.append(args.first)
         args = args.second
     if procedure.use_env == True:
-        python_args.append(env)
+        python_args_list.append(env)
     try:
-        return procedure.fn(*python_args)
+        return procedure.fn(*python_args_list)
     except TypeError:
         raise SchemeError()
 
