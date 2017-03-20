@@ -9,25 +9,20 @@ test = {
   'suites': [
     [
       {
-        'locked': True,
         'test': r"""
         >>> eval("(begin (+ 2 3) (+ 5 6))")
-        4604790c89054dde998df1b491b0fa4b
-        # locked
+        11
         >>> eval("(begin (define x 3) x)")
-        0c31fd9672da616fabf24f1c95cc313f
-        # locked
+        3
         """,
         'type': 'doctest'
       }
     ],
     [
       {
-        'locked': True,
         'test': r"""
         >>> eval("(begin 30 '(+ 2 2))")
-        3ee6dd0237df9b6ccf29370a26873cc4
-        # locked
+        Pair('+', Pair(2, Pair(2, nil)))
         # choice: Pair('+', Pair(2, Pair(2, nil)))
         # choice: Pair('quote', Pair(Pair('+', Pair(2, Pair(2, nil))), nil))
         # choice: 4
@@ -37,8 +32,7 @@ test = {
         ... (begin 42 (define x (+ x 1)))
         ... x
         ... ''')  # the last expression in do_begin_form should only be evaluated once
-        3fff5f136c823d9cefa95b502d20b1e3
-        # locked
+        1
         """,
         'type': 'doctest'
       },

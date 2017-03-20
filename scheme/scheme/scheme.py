@@ -226,8 +226,9 @@ def do_define_form(vals, env):
 
 def do_quote_form(vals):
     """Evaluate a quote form with parameters VALS."""
-    check_form(vals, 1, 1)
+    check_form(vals, 1, 1) #vals is a linked list with limit 1 length: A Pair
     "*** CODE BELOW ***"
+    #print(vals.__repr__())
     return vals.first
 
 def do_let_form(vals, env):
