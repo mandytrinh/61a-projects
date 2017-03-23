@@ -202,6 +202,8 @@ def do_lambda_form(vals, env):
     check_formals(formals)
     "*** YOUR CODE HERE ***"
     if len(vals) > 2:
+        print(vals.second)
+        print(vals.first)
         new_expr = Pair("begin", vals.second)
         return LambdaProcedure(formals, new_expr, env)
     else:
@@ -224,8 +226,13 @@ def do_define_form(vals, env):
         env.bindings[target] = scheme_eval(vals[1], env)
         return target
     elif isinstance(target, Pair):
-        "*** CODE BELOW ***"
 
+        env.bindings[target.first] = do_lambda_form(Pair()
+        print (target)
+        print (target.first)
+        print (Pair(target, pair))
+        print (Pair(target.first, target.second))
+        print (Pair(target.second, vals.second))
     else:
         raise SchemeError("bad argument to define")
 
