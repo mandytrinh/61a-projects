@@ -225,6 +225,7 @@ At each "? ", type in what you would expect the output to be.
 Type exit() to quit
 Unlocking tests for q07
 =======================
+tests
 
 Case 1
 ------
