@@ -226,7 +226,7 @@ Type exit() to quit
 Unlocking tests for q07
 =======================
 tests
-tests2
+tests3
 Case 1
 ------
 >>> eval("(begin (+ 2 3) (+ 5 6))")
