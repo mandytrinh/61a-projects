@@ -222,17 +222,12 @@ def do_define_form(vals, env):
     target = vals[0]
     if scheme_symbolp(target):
         check_form(vals, 2, 2)
-        "*** CODE BELOW ***"
-        env.bindings[target] = scheme_eval(vals[1], env)
+        env.define(target,scheme_eval(vals[1],env)) #where define(self, sym, val) returns self.bindings[sym] = vals
         return target
-    elif isinstance(target, Pair):
-
-        env.bindings[target.first] = do_lambda_form(Pair()
-        print (target)
-        print (target.first)
-        print (Pair(target, pair))
-        print (Pair(target.first, target.second))
-        print (Pair(target.second, vals.second))
+    elif isinstance(target, Pair) and scheme_symbolp(target[0]):
+        vals_sub_lambda = Pair(target.second,vals.second)
+        env.define(target[0],do_lambda_form(vals_sub_lambda,env))
+        return target[0]
     else:
         raise SchemeError("bad argument to define")
 
