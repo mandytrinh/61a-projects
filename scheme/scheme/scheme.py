@@ -135,8 +135,18 @@ class Frame:
         >>> env.make_call_frame(formals, vals)
         <{a: 1, b: 2, c: 3} -> <Global Frame>>
         """
-        frame = Frame(self)
-        "*** YOUR CODE HERE ***"
+        
+        frame = Frame(self) #Creates a new Frame instance, the parent of which is self
+        
+        "*** CODE BELOW ***"
+        
+        if len(formals) != len(vals):
+            return SchemeError
+        else:            
+            while formals is not nil:
+                frame.define(formals.first, vals.first)
+                formals = formals.second
+                vals = vals.second                
         return frame
 
     def define(self, sym, val):
@@ -201,13 +211,16 @@ def do_lambda_form(vals, env):
     formals = vals[0]
     check_formals(formals)
     "*** YOUR CODE HERE ***"
-    if len(vals) > 2:
-        print(vals.second)
-        print(vals.first)
-        new_expr = Pair("begin", vals.second)
-        return LambdaProcedure(formals, new_expr, env)
+    if len(vals) > 2: #when the body of a lambda expression contains multiple expressions
+        #print('vals[0] is:', vals[0])
+        #print('vals[1] is:', vals[1])
+        #print('vals.first is:', vals.first)
+        #print('vals.second is:', vals.second)
+        #print('vals.second.first is:', vals.second.first)    
+        new_expr = Pair("begin", vals.second) #place those expressions inside of a (begin ...) form
+        return LambdaProcedure(formals, new_expr, env) #and use that begin expression as the body
     else:
-        return LambdaProcedure(formals, vals.second.first, env)
+        return LambdaProcedure(formals, vals[1], env)
 
 def do_mu_form(vals):
     """Evaluate a mu form with parameters VALS."""
@@ -225,8 +238,12 @@ def do_define_form(vals, env):
         env.define(target,scheme_eval(vals[1],env)) #where define(self, sym, val) returns self.bindings[sym] = vals
         return target
     elif isinstance(target, Pair) and scheme_symbolp(target[0]):
+        #print('target is', target)
+        #print('target[0] is', target[0])
+        #print('target.first is', target.first)
+        #print('target.second is', target.second)
         vals_sub_lambda = Pair(target.second,vals.second)
-        env.define(target[0],do_lambda_form(vals_sub_lambda,env))
+        env.define(target[0], do_lambda_form(vals_sub_lambda,env))
         return target[0]
     else:
         raise SchemeError("bad argument to define")
