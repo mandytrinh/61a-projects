@@ -141,7 +141,7 @@ class Frame:
         "*** CODE BELOW ***"
         
         if len(formals) != len(vals):
-            return SchemeError
+            raise SchemeError
         else:            
             while formals is not nil:
                 frame.define(formals.first, vals.first)
@@ -359,8 +359,18 @@ def check_formals(formals):
 
     >>> check_formals(read_line("(a b c)"))
     """
-    "*** YOUR CODE HERE ***"
-
+    "*** CODE BELOW ***"
+    
+    symbol_set = set()
+    for each_symbol in formals:
+        if scheme_symbolp(each_symbol):
+            if each_symbol in symbol_set:
+                raise SchemeError           
+            symbol_set.add(each_symbol)
+        else:
+            raise SchemeError      
+                            
+       
 ##################
 # Tail Recursion #
 ##################
