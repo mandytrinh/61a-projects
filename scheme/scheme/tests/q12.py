@@ -18,12 +18,10 @@ test = {
         'type': 'doctest'
       },
       {
-        'locked': True,
         'test': r"""
         >>> quine = "((lambda (x) (list x (list (quote quote) x))) (quote (lambda (x) (list x (list (quote quote) x)))))"
         >>> str(eval(quine)) == quine
-        f34008a6e4d61f073f26ac75528dcec4
-        # locked
+        True
         """,
         'type': 'doctest'
       }
