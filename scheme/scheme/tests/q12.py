@@ -28,7 +28,6 @@ test = {
     ],
     [
       {
-        'locked': True,
         'test': r"""
         >>> eval('''
         ... (define (outer x y)
@@ -37,8 +36,7 @@ test = {
         ...   (inner x 10))
         ... (outer 1 2)
         ... ''')
-        c62b71b2e553170255287a3b2affec26
-        # locked
+        17
         >>> eval('''
         ... (define (outer-func x y)
         ...    (define (inner z x)
@@ -46,8 +44,7 @@ test = {
         ...    inner)
         ... ((outer-func 1 2)  1 10)
         ... ''')
-        c62b71b2e553170255287a3b2affec26
-        # locked
+        17
         """,
         'type': 'doctest'
       },

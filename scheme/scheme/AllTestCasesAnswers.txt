@@ -259,3 +259,39 @@ OK!
 
 You are done unlocking tests for this question!
 
+
+$ python3 ok -q 12 -u --local
+You are running version v1.3.0 of ok.py
+######################################
+Unlocking tests for cal/61A/fa14/proj4
+######################################
+
+At each "? ", type in what you would expect the output to be.
+Type exit() to quit
+Unlocking tests for q12
+=======================
+
+Case 3
+------
+>>> eval('''
+... (define (outer x y)
+...   (define (inner z x)
+...     (+ x (* y 2) (* z 3)))
+...   (inner x 10))
+... (outer 1 2)
+... ''')
+? 17
+OK!
+>>> eval('''
+... (define (outer-func x y)
+...    (define (inner z x)
+...      (+ x (* y 2) (* z 3)))
+...    inner)
+... ((outer-func 1 2)  1 10)
+... ''')
+? 17
+OK!
+-- Congratulations, you unlocked this case! --
+
+You are done unlocking tests for this question!
+
