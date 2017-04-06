@@ -275,3 +275,62 @@ OK!
 You are done unlocking tests for this question!
 
 
+Running tests for q12
+=====================
+
+Case 1
+------
+>>> eval("(define (square x) (* x x)) (square 21)")
+441
+>>> eval("(define square (lambda (x) (* x x))) (square (square 21))")
+194481
+
+Case 2
+------
+>>> quine = "((lambda (x) (list x (list (quote quote) x))) (quote (lambda (x) (list x (list (quote quote) x)))))"
+>>> str(eval(quine)) == quine
+True
+
+Case 3
+------
+>>> eval('''
+... (define (outer x y)
+...   (define (inner z x)
+...     (+ x (* y 2) (* z 3)))
+...   (inner x 10))
+... (outer 1 2)
+... ''')
+17
+>>> eval('''
+... (define (outer-func x y)
+...    (define (inner z x)
+...      (+ x (* y 2) (* z 3)))
+...    inner)
+... ((outer-func 1 2)  1 10)
+... ''')
+17
+
+Case 4
+------
+>>> eval('''
+... (define square (lambda (x) (* x x)))
+... (define (sum-of-squares x y)
+...   (+ (square x) (square y)))
+... (sum-of-squares 3 4)
+... ''')
+25
+>>> eval('''
+... (define double (lambda (x) (* 2 x)))
+... (define compose (lambda (f g) (lambda (x) (f (g x)))))
+... (define apply-twice (lambda (f) (compose f f)))
+... ((apply-twice double) 5)
+... ''')
+20
+
+-- 4 cases passed (100.0%) for q12 --
+
+
+
+
+
+
