@@ -214,11 +214,11 @@ def do_lambda_form(vals, env):
     check_formals(formals)
     "*** YOUR CODE HERE ***"
     if len(vals) > 2: #when the body of a lambda expression contains multiple expressions
-        #print('vals[0] is:', vals[0])
-        #print('vals[1] is:', vals[1])
-        #print('vals.first is:', vals.first)
-        #print('vals.second is:', vals.second)
-        #print('vals.second.first is:', vals.second.first)    
+        print('vals[0] is:', vals[0])
+        print('vals[1] is:', vals[1])
+        print('vals.first is:', vals.first)
+        print('vals.second is:', vals.second)
+        print('vals.second.first is:', vals.second.first)    
         new_expr = Pair("begin", vals.second) #place those expressions inside of a (begin ...) form
         return LambdaProcedure(formals, new_expr, env) #and use that begin expression as the body
     else:
@@ -240,10 +240,10 @@ def do_define_form(vals, env):
         env.define(target,scheme_eval(vals[1],env)) #where define(self, sym, val) returns self.bindings[sym] = vals
         return target
     elif isinstance(target, Pair) and scheme_symbolp(target[0]):
-        #print('target is', target)
-        #print('target[0] is', target[0])
-        #print('target.first is', target.first)
-        #print('target.second is', target.second)
+        print('target is', target)
+        print('target[0] is', target[0])
+        print('target.first is', target.first)
+        print('target.second is', target.second)
         vals_sub_lambda = Pair(target.second,vals.second)
         env.define(target[0], do_lambda_form(vals_sub_lambda,env))
         return target[0]
@@ -284,7 +284,16 @@ def do_let_form(vals, env):
 def do_if_form(vals, env):
     """Evaluate if form with parameters VALS in environment ENV."""
     check_form(vals, 2, 3)
-    "*** YOUR CODE HERE ***"
+    "*** CODE BELOW ***"
+    test = scheme_eval(vals[0], env)
+    if scheme_true(test):
+        return vals[1]
+    else:
+        if len(test) == 2:
+            return okay
+        return vals[2]
+    
+    
 
 def do_and_form(vals, env):
     """Evaluate short-circuited and with parameters VALS in environment ENV."""
