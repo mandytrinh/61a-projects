@@ -289,12 +289,10 @@ def do_if_form(vals, env):
     if scheme_true(test):
         return vals[1]
     else:
-        if len(test) == 2:
-            return okay
-        return vals[2]
+        if len(vals) == 2: #It is legal to pass in just two expressions
+            return okay #return the 2nd expression if the first expression evaluates to a true value
+        return vals[2]	#Otherwise, return the special okay value, which rep an undefined value
     
-    
-
 def do_and_form(vals, env):
     """Evaluate short-circuited and with parameters VALS in environment ENV."""
     "*** YOUR CODE HERE ***"
