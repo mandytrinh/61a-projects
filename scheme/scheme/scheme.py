@@ -295,8 +295,24 @@ def do_if_form(vals, env):
     
 def do_and_form(vals, env):
     """Evaluate short-circuited and with parameters VALS in environment ENV."""
-    "*** YOUR CODE HERE ***"
-
+    "*** YOUR CODE BELOW ***"
+	if vals is nil:
+		return True
+	if vals.second is nil: #if the second expression is nil
+		test = scheme_eval(vals.first, env) #see if the first is true
+		if scheme_true(test):
+			return test #returns it if true
+		else:
+			return False
+	else: #if second expression not nil
+		test = scheme_eval(vals.first, env) #see if first is true
+		if scheme_true(test): #if it is true
+			return do_and_form(vals.second, env) #recursively call the function on the next few expressions
+		else:
+			return False
+	
+	
+	
 def quote(value):
     """Return a Scheme expression quoting the Scheme VALUE.
 
