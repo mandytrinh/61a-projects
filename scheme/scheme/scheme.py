@@ -291,28 +291,26 @@ def do_if_form(vals, env):
     else:
         if len(vals) == 2: #It is legal to pass in just two expressions
             return okay #return the 2nd expression if the first expression evaluates to a true value
-        return vals[2]	#Otherwise, return the special okay value, which rep an undefined value
+        return vals[2]    #Otherwise, return the special okay value, which rep an undefined value
     
 def do_and_form(vals, env):
     """Evaluate short-circuited and with parameters VALS in environment ENV."""
     "*** YOUR CODE BELOW ***"
-	if vals is nil:
-		return True
-	if vals.second is nil: #if the second expression is nil
-		test = scheme_eval(vals.first, env) #see if the first is true
-		if scheme_true(test):
-			return test #returns it if true
-		else:
-			return False
-	else: #if second expression not nil
-		test = scheme_eval(vals.first, env) #see if first is true
-		if scheme_true(test): #if it is true
-			return do_and_form(vals.second, env) #recursively call the function on the next few expressions
-		else:
-			return False
-	
-	
-	
+    if vals is nil:
+        return True
+    if vals.second is nil: #if the second expression is nil
+        test = scheme_eval(vals.first, env) #see if the first is true
+        if scheme_true(test):
+            return test #returns it if true
+        else:
+            return False
+    else: #if second expression not nil
+        test = scheme_eval(vals.first, env) #see if first is true
+        if scheme_true(test): #if it is true
+            return do_and_form(vals.second, env) #recursively call the function on the next few expressions
+        else:
+            return False
+       
 def quote(value):
     """Return a Scheme expression quoting the Scheme VALUE.
 
@@ -326,8 +324,16 @@ def quote(value):
 
 def do_or_form(vals, env):
     """Evaluate short-circuited or with parameters VALS in environment ENV."""
-    "*** YOUR CODE HERE ***"
-
+    "*** YOUR CODE BELOW ***"
+    if vals is nil:
+        return False
+    if vals.second is nil:
+        test = scheme_eval(vals.first, env)
+        if scheme_true(test):
+            return quote(test)
+        
+        
+        
 def do_cond_form(vals, env):
     """Evaluate cond form with parameters VALS in environment ENV."""
     num_clauses = len(vals)
