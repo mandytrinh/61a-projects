@@ -8,7 +8,6 @@ test = {
   'suites': [
     [
       {
-        'locked': True,
         'test': r"""
         >>> eval('''
         ... (let ((x 5))
@@ -16,11 +15,9 @@ test = {
         ...         (y x))
         ...     (+ y (* x 2))))
         ... ''')
-        56929a86e7c6856b00930f1e5af1864f
-        # locked
+        9
         >>> eval("(let ((x 1) (y x)) y)")
-        377055b6dcfd7e506af592ae723fa0cb
-        # locked
+        SchemeError
         # choice: SchemeError
         # choice: 1
         # choice: x

@@ -352,8 +352,7 @@ def do_cond_form(vals, env):
             if clause.second is nil:
                 return test
             elif len(clause) > 1:
-                return do_begin_form(clause.second, env)
-            
+                return do_begin_form(clause.second, env)            
             else:
                 return clause.second.first
     return okay
