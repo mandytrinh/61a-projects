@@ -267,9 +267,15 @@ def do_let_form(vals, env):
 
     # Add a frame containing bindings
     names, values = nil, nil
-    "*** YOUR CODE HERE ***"
+    "*** CODE BELOW ***"
+    for value in bindings:
+        if len(value) > 2:
+            raise SchemeError
+        if not scheme_symbolp(value[0]):
+            raise SchemeError
+        names = Pair(value[0], names)
+        values = Pair(scheme_eval(value[1], env), values)
     new_env = env.make_call_frame(names, values)
-
     # Evaluate all but the last expression after bindings, and return the last
     last = len(exprs)-1
     for i in range(0, last):
